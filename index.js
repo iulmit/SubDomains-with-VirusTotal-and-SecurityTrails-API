@@ -61,12 +61,14 @@ function get(url, onresponse, onheaders){ //supports both headers and request bo
 
 get(TARGET_URL, function(content){
   content = JSON.parse(content);
+
+  console.error("Domain Siblings");
+  console.error(("undefined" === typeof content.domain_siblings || [] === content.domain_siblings) ? "not found" : content.domain_siblings.join("\r\n") );
+  console.error("Subdomains");
+  console.error(("undefined" === typeof content.subdomains      || [] === content.subdomains)      ? "not found" : content.subdomains.join("\r\n")      );
+//console.error("=-=-= DEBUG =-=-=");
+//console.error(JSON.stringify(content, null, 2));
   
-  if("undefined" !== content.domain_siblings) console.error("Domain Siblings", "\r\n", content.domain_siblings.join("\r\n") );
-  console.error("\r\n");
-  if("undefined" !== content.subdomains)      console.error("Subdomains",      "\r\n", content.subdomains.join("\r\n")      );
-
-
   process.exitCode=0;
   process.exit();
 });

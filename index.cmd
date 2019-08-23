@@ -12,5 +12,5 @@ goto EXIT
 
 
 :EXIT
-  pause
+::pause
   exit /b %EXIT_CODE%
