@@ -1,4 +1,5 @@
 ::@echo off
+setlocal EnableExtensions
 set "EXIT_CODE=0"
 chcp 65001 2>nul >nul
 
@@ -12,12 +13,16 @@ set "DOMAIN=%~1"
 
 if ["%DOMAIN%"] NEQ [""] ( goto HAS_ARG )
 
-set /p "DOMAIN=Enter Domain: "
+
+for /f "tokens=*" %%a in ('%~sdp0bin\input2stdout.exe VirusTotal-SubDomains-Query') do (set DOMAIN=%%a)
+
 
 
 :HAS_ARG
+echo.----------------------------------------
 call "%~sdp0index.cmd" "%API%" "%DOMAIN%"
 set "EXIT_CODE=%ErrorLevel%"
+echo.----------------------------------------
 
 
 :END

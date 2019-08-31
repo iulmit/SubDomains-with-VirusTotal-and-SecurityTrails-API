@@ -19,6 +19,22 @@ const  FS           = require("fs")
                       ,"Pragma":          "no-cache"
                       ,"X-Hello":         "Goodbye"
                       }
+     ,NATURAL_COMPARE = function(a, b){
+                          var ax=[], bx=[];
+
+                          a.replace(/(\d+)|(\D+)/g, function(_, $1, $2){ ax.push([$1 || Infinity, $2 || ""]); });
+                          b.replace(/(\d+)|(\D+)/g, function(_, $1, $2){ bx.push([$1 || Infinity, $2 || ""]); });
+
+                          while(ax.length > 0 && bx.length > 0){
+                            var an, bn, nn;
+                            
+                            an = ax.shift();
+                            bn = bx.shift();
+                            nn = (an[0] - bn[0]) || an[1].localeCompare(bn[1]);
+                            if(nn) return nn;
+                          }
+                          return ax.length - bx.length;
+                        }
       ;
 
 function get(url, onresponse, onheaders){ //supports both headers and request body handling.
@@ -61,14 +77,13 @@ function get(url, onresponse, onheaders){ //supports both headers and request bo
 
 get(TARGET_URL, function(content){
   content = JSON.parse(content);
+  content = [].concat(content.domain_siblings, content.subdomains)
+              .sort(NATURAL_COMPARE)
+              .join("\r\n")
+              ;
 
-  console.error("Domain Siblings");
-  console.error(("undefined" === typeof content.domain_siblings || [] === content.domain_siblings) ? "not found" : content.domain_siblings.join("\r\n") );
-  console.error("Subdomains");
-  console.error(("undefined" === typeof content.subdomains      || [] === content.subdomains)      ? "not found" : content.subdomains.join("\r\n")      );
-//console.error("=-=-= DEBUG =-=-=");
-//console.error(JSON.stringify(content, null, 2));
-  
+  console.log(content)
+
   process.exitCode=0;
   process.exit();
 });
