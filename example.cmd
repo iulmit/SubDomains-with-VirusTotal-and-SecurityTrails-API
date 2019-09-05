@@ -20,8 +20,9 @@ for /f "tokens=*" %%a in ('%~sdp0bin\input2stdout.exe VirusTotal-SubDomains-Quer
 
 :HAS_ARG
 echo.----------------------------------------
-call "%~sdp0index.cmd" "%API%" "%DOMAIN%"
+call "%~sdp0index.cmd" "%API%" "%DOMAIN%" >"%TEMP%\subdomains__%DOMAIN%.txt"
 set "EXIT_CODE=%ErrorLevel%"
+call "%~sdp0bin\Notepad2.exe" "%TEMP%\subdomains__%DOMAIN%.txt"
 echo.----------------------------------------
 
 
