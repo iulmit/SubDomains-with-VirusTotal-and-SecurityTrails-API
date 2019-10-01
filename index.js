@@ -77,8 +77,10 @@ function get(url, onresponse, onheaders){ //supports both headers and request bo
 
 get(TARGET_URL, function(content){
   content = JSON.parse(content);
-  content = [].concat(content.domain_siblings, content.subdomains)
-              .sort(NATURAL_COMPARE)
+  content.domain_siblings = content.domain_siblings.sort(NATURAL_COMPARE);
+  content.subdomains      = content.subdomains.sort(NATURAL_COMPARE);
+  
+  content = [].concat(content.domain_siblings, "", "", content.subdomains)
               .join("\r\n")
               ;
 
