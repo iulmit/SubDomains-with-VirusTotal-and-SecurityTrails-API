@@ -1,5 +1,11 @@
-<h1>Domain-subdomains-With-VirusTotal-API-and-NodeJS</h1>
-[NodeJS] [JavaScript] get all the domain-siblings and subdomains of an input-domain, entries are presented in a 'copy-paste' friendly-way. You can get your free API key after creating a free account and visiting https://www.virustotal.com/gui/user/USERNAME/apikey 
+grab subdomains and domain-siblings for entered domain using VirusTotal and SecurityTrail online-API and NodeJS.
 
+API used:
+<pre>
+*** available for free users: *** 
+https://www.virustotal.com/vtapi/v2/domain/report?domain=<strong>HOSTNAME</strong>&apikey=<strong>KEY</strong>
+https://api.securitytrails.com/v1/domain/<strong>HOSTNAME</strong>/subdomains?apikey=<strong>KEY</strong>
 
-Place your API in <code>API.txt</code>.
+*** not for free users: *** 
+https://api.securitytrails.com/v1/domain/<strong>HOSTNAME</strong>/associated?apikey=<strong>KEY</strong>
+</pre>
