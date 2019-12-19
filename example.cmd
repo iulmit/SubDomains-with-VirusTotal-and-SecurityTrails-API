@@ -1,31 +1,8 @@
-::@echo off
-setlocal EnableExtensions
-set "EXIT_CODE=0"
+@echo off
 chcp 65001 2>nul >nul
+pushd "%~sdp0"
 
-::------------------------------------------------------------------------------------
-:: wrap for easier domain query to 
-:: https://www.virustotal.com/vtapi/v2/domain/report?apikey=<apikey>&domain=<domain>
-::------------------------------------------------------------------------------------
-for /f "tokens=*" %%a in ('type %~sdp0API.txt') do (set API=%%a)
+call "node.exe" "%~sdp0index.js" %*
 
-set "DOMAIN=%~1"
-
-if ["%DOMAIN%"] NEQ [""] ( goto HAS_ARG )
-
-
-for /f "tokens=*" %%a in ('%~sdp0bin\input2stdout.exe VirusTotal-SubDomains-Query') do (set DOMAIN=%%a)
-
-
-
-:HAS_ARG
-echo.----------------------------------------
-call "%~sdp0index.cmd" "%API%" "%DOMAIN%" >"%TEMP%\subdomains__%DOMAIN%.txt"
-set "EXIT_CODE=%ErrorLevel%"
-call "%~sdp0bin\Notepad2.exe" "%TEMP%\subdomains__%DOMAIN%.txt"
-echo.----------------------------------------
-
-
-:END
-  pause
-  exit /b %EXIT_CODE%
+::pause
+exit /b 0
