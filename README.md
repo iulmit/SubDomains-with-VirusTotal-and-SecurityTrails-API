@@ -9,3 +9,9 @@ https://api.securitytrails.com/v1/domain/<strong>HOSTNAME</strong>/subdomains?ap
 *** not for free users: *** 
 https://api.securitytrails.com/v1/domain/<strong>HOSTNAME</strong>/associated?apikey=<strong>KEY</strong>
 </pre>
+
+<hr/>
+
+changelog is available in  
+<a href="https://github.com/eladkarako/SubDomains-with-VirusTotal-and-SecurityTrails-API/commits">https://github.com/eladkarako/SubDomains-with-VirusTotal-and-SecurityTrails-API/commits</a>  
+and changelog.nfo (with some additional information, and "versions" are date based of the commit).

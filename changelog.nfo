@@ -1,0 +1,47 @@
+2021.09.28.185350
++adding changelog notes and changelog file (changelog will not be updated with itself, since it creates a loop ;) - other than now which I'm pre-assuming date and time).
+
+2021.09.28.184330
+normalizing EOL characters to windows-eol. (note: it means adding a .gitattributes and fixing some existing EOL in some files).
+
+2021.09.28.184126
+not including debug content. (note: + adding .gitignore to ignore the debug text and json files, if action is uncommented in the code). 
+
+2021.09.28.183953
+normalize naming. (note: example.cmd to index.cmd)
+
+2021.09.28.183243
+- removed 'SUPER_DOMAINS' since I didn't used it anyway.
++ using generic workarounds to make sure the client always connects (even with certificate errors) - NODE_TLS_REJECT_UNAUTHORIZED, rejectUnauthorized-false, requestCert-false.
++ fixing logic bug: the protocol of the url is (now) properly-compared to either https or http.
++ adding (non-breaking) notes regarding missing entries in VirusTotal response json, that might be a change in the API.
++ reduce the error handling to minimal JSON.parse, including two debug text writing (commented-out) for response raw content (but really - JSON) and the parsed JSON.
++ the done_handler() was throwing errors due to @#$! 'highResolutionScrollingAware' and 'ultraHighResolutionScrollingAware' manifest entries which were not a problem in w7 but broke the exe in w10. so running Notepad2.exe returned error through 'spawnSync'.
+* updating exes with proper manifest from https://github.com/manifest
+
+2019.12.19.175149
+* u (note: adding information regarding the API used)
+
+2019.12.19.162749
+* u (note: improved error handling, some code refactoring)
+
+2019.10.11.104815
+* fix in-case there are no entries in the response-JSON object from virustotal.
+
+2019.10.01.220243
+* making subdomains and sibling domains be semi-separated in the list, each one is sorted by itself, then joined to a \r\n separated-text with two-empty-lines-for-separation.
+
+2019.09.05.223600
+* writing the (sub)domains output into a text-file and opening it with Notepad2 (binary file included).
+
+2019.08.31.144024
+* adding a new way to easy paste domain text, joined subdomains and domain sibling content.
+
+2019.08.23.205120
+* better output.
+
+2019.08.23.203355
++ initial
+
+2019.08.23.203151
++ initial commit
