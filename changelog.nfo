@@ -1,3 +1,6 @@
+2021.09.28.203410
+bringing back example.cmd (it just calls index.cmd) since I have got used to it.
+
 2021.09.28.202811
 * ignore some warnings. normalizing input, handling empty or invalid response content as an error. only use pause when exit code is not zero (pause is not needed since the program runs the Notepad2.exe in sync and waits for it to end, where the console still is up).
 
