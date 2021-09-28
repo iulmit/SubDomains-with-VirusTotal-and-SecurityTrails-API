@@ -25,6 +25,7 @@ const  FS               = require("fs")
                             
                             url = URL.parse(url);
 
+                            process.env["NODE_NO_WARNINGS"] = 1;
                             process.env["NODE_TLS_REJECT_UNAUTHORIZED"] = 0;
                             
                             const CONF = {protocol           : url.protocol  // "http:" or "https:"
@@ -59,10 +60,20 @@ const  FS               = require("fs")
 
 
 
-      ,HOSTNAME = process.argv.filter(function(s){return false === /node\.exe/i.test(s) && process.mainModule.filename !== s;}).pop()
-               || EXEC_FILE_SYNC(RESOLVE(__dirname + "/bin/input2stdout.exe"),["SubDomains-Query"],{"encoding":"utf8","timeout":60*1000})
-               || ""
-      
+      ,HOSTNAME = (
+                    process.argv.filter(function(s){return false === /node\.exe/i.test(s) && process.mainModule.filename !== s;}).pop()
+                 || EXEC_FILE_SYNC(
+                      RESOLVE(__dirname + "/bin/inputbox.exe")
+                     ,['-prompt=\"Enter your subdomain:\"'
+                      ,'-title=\"Query Domains With VirusTotal And SecurityTrails\"'
+                      ,'-default=\"bin.eladkarako.com\"'
+                      ]
+                     ,{"encoding":"utf8","timeout":60*1000}
+                    )
+                  )
+                  .replace(/[\r\n]+/gm,"")
+                  .trim()
+
       ,FILE_OUT = RESOLVE(process.env["TEMP"] || process.env["TMP"] || __dirname) + "/subdomains__" + HOSTNAME + ".txt"
 
       ,PATH_OF_APIKEY_FILES          = __dirname
@@ -115,21 +126,36 @@ function done_handler(){
   if(false === done_flag_securitytrails_associated){ console.error("[INFO] request not done yet - SecurityTrails(associated)");  return; }
 */
 
-  everything = everything.sort(NATURAL_COMPARE)
-                         .join("\r\n")
-                         ;
-
-  console.error("");
-  console.error("[INFO] done_handler - output was written to the following external-file:");
-  console.error(FILE_OUT);
-  FS.writeFileSync(FILE_OUT, everything, {flag:"w", encoding:"utf8"}); //overwrite
-
-  EXEC_FILE_SYNC(RESOLVE(__dirname + "/bin/Notepad2.exe"),[FILE_OUT],{"encoding":"utf8"});
+  everything = everything.map(function(s){return s.replace(/[\r\n]+/gm,"").trim();})
+                         .filter(function(s){return s.length > 2;})
+                         .reduce(function(carry, current, index, array){
+                            carry[current] = "";
+                            return carry;
+                          },{})
+                          ;
+  everything = Object.keys(everything)
+                     .sort(NATURAL_COMPARE)
+                     ;
   
-  console.error("");
-  console.error("[INFO] program is done.");
-  process.exitCode=0;
-  process.exit();
+  if(0 === everything.length){
+    console.error("");
+    console.error("[INFO] there are no results. program is done.");
+    process.exitCode=111;
+    process.exit();
+  }else{
+    everything = everything.join("\r\n");
+    console.error("");
+    console.error("[INFO] done_handler - output was written to the following external-file:");
+    console.error(FILE_OUT);
+    FS.writeFileSync(FILE_OUT, everything, {flag:"w", encoding:"utf8"}); //overwrite
+
+    EXEC_FILE_SYNC(RESOLVE(__dirname + "/bin/Notepad2.exe"),[FILE_OUT],{"encoding":"utf8"});
+    
+    console.error("");
+    console.error("[INFO] program is done.");
+    process.exitCode=0;
+    process.exit();
+  }
 }
 
 
@@ -138,9 +164,6 @@ if(CONTENT_APIKEY_VIRUSTOTAL.length > 0){
   console.error("[INFO] request started - VirusTotal [" + URL_VIRUSTOTAL_ALL + "]");
   GET(URL_VIRUSTOTAL_ALL
      ,function(content, url, request, response){
-
-
-
 
         done_flag_virustotal = true;
         if(200 !== response.statusCode){console.error("[ERROR] request failed (response code [" + response.statusCode + "]) - VirusTotal"); done_handler(); return;}
