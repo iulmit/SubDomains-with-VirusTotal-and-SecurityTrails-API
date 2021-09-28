@@ -1,3 +1,15 @@
+2021.09.28.202811
+* ignore some warnings. normalizing input, handling empty or invalid response content as an error. only use pause when exit code is not zero (pause is not needed since the program runs the Notepad2.exe in sync and waits for it to end, where the console still is up).
+
+2021.09.28.202409
+* u (note: continue of process below)
+
+2021.09.28.202319
+* Notepad2.ini is generated in each execution of Notepad2.exe and does not contains meaningful information, so it is not needed.
+
+2021.09.28.202215
+* the vb6 exe acts weird when having an embedded manifest, so I've included the binary from https://github.com/eladkarako/CSharp-InputBox.git instead.
+
 2021.09.28.191031
 + making sure not to include the actual API keys by mistake, by requiring user, for the first time usage to rename '.txt.example' files to just '.txt' and placing their actual API key inside, can be include an empty file for API_SECURITYTRAILS.txt for now since their API sucks so it is commented out.
 
