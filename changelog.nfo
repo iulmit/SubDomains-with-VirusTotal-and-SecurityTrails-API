@@ -1,3 +1,6 @@
+2021.09.28.191031
++ making sure not to include the actual API keys by mistake, by requiring user, for the first time usage to rename '.txt.example' files to just '.txt' and placing their actual API key inside, can be include an empty file for API_SECURITYTRAILS.txt for now since their API sucks so it is commented out.
+
 2021.09.28.185350
 +adding changelog notes and changelog file (changelog will not be updated with itself, since it creates a loop ;) - other than now which I'm pre-assuming date and time).
 
