@@ -1,0 +1,17 @@
+*.exe            binary
+
+*.dll            binary
+
+*.png            binary
+
+
+*.manifest       text    eol=crlf
+
+*.cmd            text    eol=crlf
+
+*.ini            text    eol=crlf
+
+*.js             text    eol=crlf
+
+
+README.md                eol=crlf
